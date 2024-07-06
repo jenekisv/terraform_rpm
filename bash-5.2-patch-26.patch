@@ -1,0 +1,23 @@
+diff --git a/lib/readline/colors.c b/lib/readline/colors.c
+--- a/lib/readline/colors.c
++++ b/lib/readline/colors.c
+@@ -73,7 +73,7 @@
+ static bool is_colored (enum indicator_no type);
+ static void restore_default_color (void);
+ 
+-#define RL_COLOR_PREFIX_EXTENSION	"readline-colored-completion-prefix"
++#define RL_COLOR_PREFIX_EXTENSION	".readline-colored-completion-prefix"
+ 
+ COLOR_EXT_TYPE *_rl_color_ext_list = 0;
+ 
+diff --git a/patchlevel.h b/patchlevel.h
+--- a/patchlevel.h
++++ b/patchlevel.h
+@@ -25,6 +25,6 @@
+    regexp `^#define[ 	]*PATCHLEVEL', since that's what support/mkversion.sh
+    looks for to find the patch level (for the sccs version string). */
+ 
+-#define PATCHLEVEL 25
++#define PATCHLEVEL 26
+ 
+ #endif /* _PATCHLEVEL_H_ */

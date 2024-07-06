@@ -1,0 +1,56 @@
+diff --git a/arrayfunc.c b/arrayfunc.c
+--- a/arrayfunc.c
++++ b/arrayfunc.c
+@@ -650,7 +650,7 @@ assign_assoc_from_kvlist (var, nlist, h, flags)
+ 	  continue;
+ 	}	      
+ 
+-      aval = expand_subscript_string (v, 0);
++      aval = expand_assignment_string_to_string (v, 0);
+       if (aval == 0)
+ 	{
+ 	  aval = (char *)xmalloc (1);
+@@ -842,7 +842,7 @@ assign_compound_array_list (var, nlist, flags)
+       /* See above; we need to expand the value here */
+       if (assoc_p (var))
+ 	{
+-	  val = expand_subscript_string (val, 0);
++	  val = expand_assignment_string_to_string (val, 0);
+ 	  if (val == 0)
+ 	    {
+ 	      val = (char *)xmalloc (1);
+@@ -1030,7 +1030,7 @@ expand_and_quote_assoc_word (w, type)
+     nword[i++] = w[ind++];
+   nword[i++] = w[ind++];
+ 
+-  t = expand_subscript_string (w+ind, 0);
++  t = expand_assignment_string_to_string (w+ind, 0);
+   s = (t && strchr (t, CTLESC)) ? quote_escapes (t) : t;
+   value = sh_single_quote (s ? s : "");
+   if (s != t)
+diff --git a/patchlevel.h b/patchlevel.h
+--- a/patchlevel.h
++++ b/patchlevel.h
+@@ -25,6 +25,6 @@
+    regexp `^#define[ 	]*PATCHLEVEL', since that's what support/mkversion.sh
+    looks for to find the patch level (for the sccs version string). */
+ 
+-#define PATCHLEVEL 23
++#define PATCHLEVEL 24
+ 
+ #endif /* _PATCHLEVEL_H_ */
+diff --git a/subst.c b/subst.c
+--- a/subst.c
++++ b/subst.c
+@@ -10802,7 +10802,11 @@ expand_subscript_string (string, quoted)
+   oe = expand_no_split_dollar_star;
+   ret = (char *)NULL;
+ 
++#if 0
+   td.flags = W_NOPROCSUB|W_NOTILDE|W_NOSPLIT2;	/* XXX - W_NOCOMSUB? */
++#else
++  td.flags = W_NOPROCSUB|W_NOSPLIT2;	/* XXX - W_NOCOMSUB? */
++#endif
+   td.word = savestring (string);		/* in case it's freed on error */
+ 
+   expand_no_split_dollar_star = 1;
